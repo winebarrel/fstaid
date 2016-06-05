@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+%:
+	dh $@
+
+override_dh_auto_install:
+	# nothing to do
+
+override_dh_fixperms:
+	dh_fixperms
+	chmod 0755 debian/fstaid/usr/sbin/fstaid

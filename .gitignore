@@ -1,0 +1,10 @@
+/fstaid
+/*.gz
+.DS_Store
+*.tml
+/debian/fstaid.debhelper.log
+/debian/fstaid.substvars
+/debian/fstaid/
+/debian/files
+/pkg/fstaid*
+.DS_Store

@@ -1,0 +1,6 @@
+[wandisco-git]
+name=WANdisco Distribution of git
+baseurl=http://opensource.wandisco.com/centos/6/git/$basearch
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-WANdisco

@@ -1,0 +1,19 @@
+FROM centos:centos6
+
+USER root
+WORKDIR /
+
+COPY etc/wandisco.repo /etc/yum.repos.d/
+RUN rpm --import http://opensource.wandisco.com/RPM-GPG-KEY-WANdisco
+RUN yum update -y
+RUN yum install -y rpmdevtools make
+RUN yum install -y git --enablerepo=wandisco-git
+RUN rpmdev-setuptree
+
+ARG GO_VERSION=1.8
+ENV GOROOT=/usr/local/go
+ENV GOPATH=/root/.go
+ENV PATH $GOROOT/bin:$PATH
+RUN wget -O- -q https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz | tar zxf - && \
+    mv go /usr/local/
+RUN mkdir $GOPATH
