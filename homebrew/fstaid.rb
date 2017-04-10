@@ -5,7 +5,7 @@ class Fstaid < Formula
 
   homepage 'https://github.com/winebarrel/fstaid'
   url "https://github.com/winebarrel/fstaid/releases/download/v#{VERSION}/fstaid-v#{VERSION}-darwin-amd64.gz"
-  sha256 '...'
+  sha256 'pkg/fstaid-v0.1.0-darwin-amd64.gz'
   version VERSION
   head 'https://github.com/winebarrel/fstaid.git', :branch => 'master'
 
