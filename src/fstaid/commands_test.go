@@ -154,3 +154,53 @@ func TestCommandsSlefCheckFail(t *testing.T) {
 
 	assert.Equal("self: failed: exitCode=1\n", out)
 }
+
+func TestCommandsInitCheck(t *testing.T) {
+	assert := assert.New(t)
+
+	config := &Config{
+		Global:    GlobalConfig{Maxattempts: 3},
+		Primary:   CommandConfig{Command: "echo 1", Timeout: 1},
+		Secondary: CommandConfig{Command: "echo 2", Timeout: 1},
+		Self:      CommandConfig{Command: "echo 3", Timeout: 1},
+	}
+
+	out := logToBuffer(func() {
+		cmds, _ := NewCommands(config)
+		result := cmds.InitCheck()
+
+		assert.Equal(true, result.Primary.IsSuccess())
+		assert.Equal(true, result.Secondary.IsSuccess())
+		assert.Equal(true, result.SelfCheckIsSuccess())
+	})
+
+	assert.Equal(`self: stdout: 3
+primary: stdout: 1
+secondary: stdout: 2
+`, out)
+}
+
+func TestCommandsInitCheckFail(t *testing.T) {
+	assert := assert.New(t)
+
+	out := logToBuffer(func() {
+		config := &Config{
+			Global:    GlobalConfig{Maxattempts: 3},
+			Primary:   CommandConfig{Command: "false", Timeout: 1},
+			Secondary: CommandConfig{Command: "false", Timeout: 1},
+			Self:      CommandConfig{Command: "false", Timeout: 1},
+		}
+
+		cmds, _ := NewCommands(config)
+		result := cmds.InitCheck()
+
+		assert.Equal(false, result.Primary.IsSuccess())
+		assert.Equal(false, result.Secondary.IsSuccess())
+		assert.Equal(false, result.SelfCheckIsSuccess())
+	})
+
+	assert.Equal(`self: failed: exitCode=1
+primary: failed: exitCode=1
+secondary: failed: exitCode=1
+`, out)
+}

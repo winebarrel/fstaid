@@ -58,7 +58,7 @@ func main() {
 		log.Fatalf("Create commands failed: %s", err)
 	}
 
-	result := cmds.Check()
+	result := cmds.InitCheck()
 
 	if !result.SelfCheckIsSuccess() || !result.Primary.IsSuccess() || !result.Secondary.IsSuccess() {
 		log.Fatalf("Initial check failed")

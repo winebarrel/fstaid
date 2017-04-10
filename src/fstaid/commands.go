@@ -69,6 +69,26 @@ func NewCommands(config *Config) (cmds *Commands, err error) {
 	return
 }
 
+func (cmds *Commands) InitCheck() (result *CheckResult) {
+	result = &CheckResult{
+		Primary:   &CommandResult{},
+		Secondary: &CommandResult{},
+		Self:      &CommandResult{},
+	}
+
+	if cmds.Self != nil {
+		result.Self.ExitCode, result.Self.Timeout = cmds.Self.Run()
+	}
+
+	result.Primary.ExitCode, result.Primary.Timeout = cmds.Primary.Run()
+
+	if cmds.Secondary != nil {
+		result.Secondary.ExitCode, result.Secondary.Timeout = cmds.Secondary.Run()
+	}
+
+	return
+}
+
 func (cmds *Commands) Check() (result *CheckResult) {
 	result = &CheckResult{
 		Primary:   &CommandResult{},
