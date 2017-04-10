@@ -9,7 +9,7 @@ fstaid is a daemon that monitors the health condition of the server and executes
 ## Usage
 
 ```
-Usage of ./fstaid:
+Usage of fstaid:
   -config string
     	config file path (default "fstaid.tml")
   -version
