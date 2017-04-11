@@ -63,7 +63,6 @@ primary_timeout     = (ARGV[1] == 'true')
 secondary_exit_code =  ARGV[2].to_i
 secondary_timeout   = (ARGV[3] == 'true')
 
-
 def failover
   # to fail over
 end
