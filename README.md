@@ -6,6 +6,10 @@ fstaid is a daemon that monitors the health condition of the server and executes
 
 ![](https://cdn.pbrd.co/images/fjskjOr4.png)
 
+## Flowchart
+
+![](https://cdn.pbrd.co/images/2PtOoeCdD.png)
+
 ## Usage
 
 ```
