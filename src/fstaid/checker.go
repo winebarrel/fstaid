@@ -50,7 +50,7 @@ func (checker *Checker) CheckLockFile() {
 	}
 }
 
-func (checker *Checker) HandleFailWithoutShutdown(result *CheckResult) {
+func (checker *Checker) HandleFailureWithoutShutdown(result *CheckResult) {
 	checker.Running = false
 	log.Println("Call handler")
 
@@ -63,8 +63,8 @@ func (checker *Checker) HandleFailWithoutShutdown(result *CheckResult) {
 	checker.TouchLockFile()
 }
 
-func (checker *Checker) HandleFail(result *CheckResult) {
-	checker.HandleFailWithoutShutdown(result)
+func (checker *Checker) HandleFailure(result *CheckResult) {
+	checker.HandleFailureWithoutShutdown(result)
 	ServerShutdown()
 }
 
@@ -77,7 +77,7 @@ func (checker *Checker) Check() {
 
 	if !result.Primary.IsSuccess() && !result.Secondary.IsSuccess() {
 		log.Println("** Health check failed **")
-		checker.HandleFail(result)
+		checker.HandleFailure(result)
 	}
 }
 

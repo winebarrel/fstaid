@@ -2,11 +2,13 @@ package fstaid
 
 import (
 	"bytes"
+	"github.com/bouk/monkey"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"reflect"
 )
 
 func tempFile(content string, callback func(f *os.File)) {
@@ -52,4 +54,11 @@ func ginMode(mode string, callback func()) {
 func fileExists(filename string) bool {
 	_, err := os.Stat(filename)
 	return err == nil
+}
+
+func patchInstanceMethod(receiver interface{}, methodName string, replacementf func(**monkey.PatchGuard) interface{}) {
+	var guard *monkey.PatchGuard
+	replacement := replacementf(&guard)
+	guard = monkey.PatchInstanceMethod(
+		reflect.TypeOf(receiver), methodName, replacement)
 }

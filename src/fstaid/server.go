@@ -90,7 +90,7 @@ func (server *Server) Fail(c *gin.Context) {
 		Secondary: &CommandResult{ExitCode: exitCode},
 	}
 
-	server.Checker.HandleFailWithoutShutdown(result)
+	server.Checker.HandleFailureWithoutShutdown(result)
 
 	c.JSON(200, gin.H{
 		"accepted": true,

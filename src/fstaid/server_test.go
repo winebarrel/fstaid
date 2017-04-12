@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
-	"reflect"
 	"testing"
 )
 
@@ -30,16 +29,14 @@ func TestServerFail(t *testing.T) {
 	assert := assert.New(t)
 
 	checker := &Checker{}
-	handleFailWithoutShutdownCalled := false
+	HandleFailureWithoutShutdownCalled := false
 	serverShutdownCalled := false
 
-	var guard *monkey.PatchGuard
-	guard = monkey.PatchInstanceMethod(
-		reflect.TypeOf(checker), "HandleFailWithoutShutdown",
-		func(_ *Checker, result *CheckResult) {
-			defer guard.Unpatch()
-			guard.Restore()
-			handleFailWithoutShutdownCalled = true
+	patchInstanceMethod(checker, "HandleFailureWithoutShutdown", func(guard **monkey.PatchGuard) interface{} {
+		return func(_ *Checker, result *CheckResult) {
+			defer (*guard).Unpatch()
+			(*guard).Restore()
+			HandleFailureWithoutShutdownCalled = true
 
 			assert.Equal(&CheckResult{
 				Primary:   &CommandResult{ExitCode: 1},
@@ -47,7 +44,8 @@ func TestServerFail(t *testing.T) {
 			}, result)
 
 			return
-		})
+		}
+	})
 
 	monkey.Patch(ServerShutdown, func() {
 		defer monkey.Unpatch(ServerShutdown)
@@ -64,7 +62,7 @@ func TestServerFail(t *testing.T) {
 		assert.Equal(body, `{"accepted":true}`+"\n")
 	})
 
-	assert.Equal(true, handleFailWithoutShutdownCalled)
+	assert.Equal(true, HandleFailureWithoutShutdownCalled)
 	assert.Equal(true, serverShutdownCalled)
 }
 
@@ -72,16 +70,14 @@ func TestServerFailWithExitCode(t *testing.T) {
 	assert := assert.New(t)
 
 	checker := &Checker{}
-	handleFailWithoutShutdownCalled := false
+	HandleFailureWithoutShutdownCalled := false
 	serverShutdownCalled := false
 
-	var guard *monkey.PatchGuard
-	guard = monkey.PatchInstanceMethod(
-		reflect.TypeOf(checker), "HandleFailWithoutShutdown",
-		func(_ *Checker, result *CheckResult) {
-			defer guard.Unpatch()
-			guard.Restore()
-			handleFailWithoutShutdownCalled = true
+	patchInstanceMethod(checker, "HandleFailureWithoutShutdown", func(guard **monkey.PatchGuard) interface{} {
+		return func(_ *Checker, result *CheckResult) {
+			defer (*guard).Unpatch()
+			(*guard).Restore()
+			HandleFailureWithoutShutdownCalled = true
 
 			assert.Equal(&CheckResult{
 				Primary:   &CommandResult{ExitCode: 2},
@@ -89,7 +85,8 @@ func TestServerFailWithExitCode(t *testing.T) {
 			}, result)
 
 			return
-		})
+		}
+	})
 
 	monkey.Patch(ServerShutdown, func() {
 		defer monkey.Unpatch(ServerShutdown)
@@ -106,6 +103,6 @@ func TestServerFailWithExitCode(t *testing.T) {
 		assert.Equal(body, `{"accepted":true}`+"\n")
 	})
 
-	assert.Equal(true, handleFailWithoutShutdownCalled)
+	assert.Equal(true, HandleFailureWithoutShutdownCalled)
 	assert.Equal(true, serverShutdownCalled)
 }
