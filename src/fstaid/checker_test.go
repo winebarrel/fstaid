@@ -251,7 +251,7 @@ func TestCheckerPrimaryCheckFailSecondaryCheckSuccess(t *testing.T) {
 
 	assert.Equal(true, checkCalled)
 	assert.Equal(false, handleFailureCalled)
-	assert.Equal("", out)
+	assert.Equal("Primary check failed, but Secondary check succeeded\n", out)
 }
 
 func TestCheckerSelfCheckFail(t *testing.T) {

@@ -80,9 +80,13 @@ func (checker *Checker) Check() {
 		}
 	}
 
-	if !result.Primary.IsSuccess() && !result.Secondary.IsSuccess() {
-		log.Println("** Health check failed **")
-		checker.HandleFailure(result)
+	if !result.Primary.IsSuccess() {
+		if !result.Secondary.IsSuccess() {
+			log.Println("** Health check failed **")
+			checker.HandleFailure(result)
+		} else {
+			log.Println("Primary check failed, but Secondary check succeeded")
+		}
 	}
 }
 
