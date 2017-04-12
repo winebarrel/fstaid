@@ -1,7 +1,7 @@
 require 'formula'
 
 class Fstaid < Formula
-  VERSION = '0.1.1'
+  VERSION = '0.1.2'
 
   homepage 'https://github.com/winebarrel/fstaid'
   url "https://github.com/winebarrel/fstaid/releases/download/v#{VERSION}/fstaid-v#{VERSION}-darwin-amd64.gz"
