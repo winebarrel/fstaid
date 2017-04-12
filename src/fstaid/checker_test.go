@@ -258,8 +258,14 @@ func TestCheckerSelfCheckFail(t *testing.T) {
 	assert := assert.New(t)
 
 	commands := &Commands{}
-	checker := &Checker{Commands: commands}
+
+	checker := &Checker{
+		Config:   &Config{Global: GlobalConfig{ContinueIfSelfCheckFailed: false}},
+		Commands: commands,
+	}
+
 	checkCalled := false
+	fatalfCalled := false
 
 	result := &CheckResult{
 		Primary: &CommandResult{},
@@ -277,10 +283,45 @@ func TestCheckerSelfCheckFail(t *testing.T) {
 
 	monkey.Patch(log.Fatalf, func(format string, v ...interface{}) {
 		defer monkey.Unpatch(log.Fatalf)
+		fatalfCalled = true
 		assert.Equal("** Self check failed **", format)
 	})
 
 	checker.Check()
 
 	assert.Equal(true, checkCalled)
+	assert.Equal(true, fatalfCalled)
+}
+
+func TestCheckerSelfCheckFailAndContinue(t *testing.T) {
+	assert := assert.New(t)
+
+	commands := &Commands{}
+
+	checker := &Checker{
+		Config:   &Config{Global: GlobalConfig{ContinueIfSelfCheckFailed: true}},
+		Commands: commands,
+	}
+
+	checkCalled := false
+
+	result := &CheckResult{
+		Self: &CommandResult{ExitCode: 1},
+	}
+
+	out := logToBuffer(func() {
+		patchInstanceMethod(commands, "Check", func(guard **monkey.PatchGuard) interface{} {
+			return func(_ *Commands) *CheckResult {
+				defer (*guard).Unpatch()
+				(*guard).Restore()
+				checkCalled = true
+				return result
+			}
+		})
+
+		checker.Check()
+	})
+
+	assert.Equal(true, checkCalled)
+	assert.Equal("** Self check failed ** (Health check will continue)\n", out)
 }

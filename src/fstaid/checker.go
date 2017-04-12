@@ -72,7 +72,12 @@ func (checker *Checker) Check() {
 	result := checker.Commands.Check()
 
 	if !result.SelfCheckIsSuccess() {
-		log.Fatalf("** Self check failed **")
+		if checker.Config.Global.ContinueIfSelfCheckFailed {
+			log.Println("** Self check failed ** (Health check will continue)")
+			return
+		} else {
+			log.Fatalf("** Self check failed **")
+		}
 	}
 
 	if !result.Primary.IsSuccess() && !result.Secondary.IsSuccess() {

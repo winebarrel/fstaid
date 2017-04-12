@@ -16,12 +16,13 @@ type Config struct {
 }
 
 type GlobalConfig struct {
-	Port        int
-	Maxattempts int
-	Interval    int
-	Lockdir     string
-	Log         string
-	Mode        string
+	Port                      int
+	Maxattempts               int
+	Interval                  int
+	Lockdir                   string
+	Log                       string
+	Mode                      string
+	ContinueIfSelfCheckFailed bool `toml:"continue_if_self_check_failed"`
 }
 
 func (config *GlobalConfig) LockFile() string {

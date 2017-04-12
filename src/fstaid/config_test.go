@@ -18,6 +18,7 @@ maxattempts = 2
 lockdir = "/var/tmp"
 log = "/var/log/fstaid.log"
 mode = "release"
+continue_if_self_check_failed = true
 
 [handler]
 command = "handler.rb"
@@ -52,6 +53,7 @@ password = "bar"
 				Lockdir:     "/var/tmp",
 				Log:         "/var/log/fstaid.log",
 				Mode:        "release",
+				ContinueIfSelfCheckFailed: true,
 			},
 			Primary: CommandConfig{
 				Command: "echo 1",

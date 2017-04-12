@@ -5,6 +5,7 @@ maxattempts = 3
 #lockdir = "/tmp"
 #log = "/var/log/fstaid.log"
 #mode = "debug"
+#continue_if_self_check_failed = false
 
 [handler]
 command = "/usr/libexec/fstaid/handler.rb"
