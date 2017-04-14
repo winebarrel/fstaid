@@ -37,7 +37,7 @@ test: $(TEST_SRC)
 
 .PHONY: clean
 clean: $(TEST_SRC)
-	rm -f $(PROGRAM) pkg/*
+	rm -f $(PROGRAM)
 
 .PHONY: package
 package: clean test $(PROGRAM)
