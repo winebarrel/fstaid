@@ -1,0 +1,19 @@
+[global]
+port = 8080
+interval = 1
+maxattempts = 3
+#lockdir = "/tmp"
+#log = "/var/log/fstaid.log"
+#mode = "release"
+
+[handler]
+command = "/usr/libexec/fstaid/handler.rb"
+timeout = 300
+
+[primary]
+command = "/Users/sugawara/src/fstaid/hoge.rb"
+timeout = 3
+
+[[user]]
+userid = "foo"
+password = "bar"

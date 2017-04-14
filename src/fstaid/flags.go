@@ -9,7 +9,7 @@ import (
 var version string
 
 const (
-	DefaultConfig = "fstaid.tml"
+	DefaultConfig = "fstaid.toml"
 )
 
 type Flags struct {
