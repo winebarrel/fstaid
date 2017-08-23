@@ -43,10 +43,12 @@ timeout = 3
 [secondary]
 command = "curl -s -f -x server-02:8080 server-01"
 timeout = 3
+# secondary check is not required
 
 [self]
 command = "curl -s -f 169.254.169.254/latest/meta-data/instance-id"
 timeout = 3
+# self check is not required
 
 [[user]]
 userid = "foo"
