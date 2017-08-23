@@ -21,7 +21,7 @@ func TestServerPing(t *testing.T) {
 		body, status := readResponse(res)
 
 		assert.Equal(200, status)
-		assert.Equal(body, `{"message":"pong"}`+"\n")
+		assert.Equal(`{"message":"pong"}`, body)
 	})
 }
 
@@ -59,7 +59,7 @@ func TestServerFail(t *testing.T) {
 		body, status := readResponse(res)
 
 		assert.Equal(200, status)
-		assert.Equal(body, `{"accepted":true}`+"\n")
+		assert.Equal(`{"accepted":true}`, body)
 	})
 
 	assert.Equal(true, HandleFailureWithoutShutdownCalled)
@@ -100,7 +100,7 @@ func TestServerFailWithExitCode(t *testing.T) {
 		body, status := readResponse(res)
 
 		assert.Equal(200, status)
-		assert.Equal(body, `{"accepted":true}`+"\n")
+		assert.Equal(`{"accepted":true}`, body)
 	})
 
 	assert.Equal(true, HandleFailureWithoutShutdownCalled)
