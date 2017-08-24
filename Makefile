@@ -27,6 +27,7 @@ go-get:
 $(PROGRAM): $(SRC)
 ifeq ($(GOOS),linux)
 	GOPATH=$(RUNTIME_GOPATH) CGO_ENABLED=0 go build -ldflags "-X fstaid.version=$(VERSION)" -a -tags netgo -installsuffix netgo -o $(PROGRAM)
+	[[ "`ldd $(PROGRAM)`" =~ "not a dynamic executable" ]] || exit 1
 else
 	GOPATH=$(RUNTIME_GOPATH) CGO_ENABLED=0 go build -ldflags "-X fstaid.version=$(VERSION)" -o $(PROGRAM)
 endif
