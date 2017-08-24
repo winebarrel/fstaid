@@ -29,7 +29,7 @@ interval = 1
 maxattempts = 3
 #lockdir = "/tmp"
 #log = "/var/log/fstaid.log"
-#mode = "debug"
+#mode = "debug"(default) / "release"
 #continue_if_self_check_failed = false
 
 [handler]
