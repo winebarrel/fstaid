@@ -26,9 +26,9 @@ go-get:
 
 $(PROGRAM): $(SRC)
 ifeq ($(GOOS),linux)
-	GOPATH=$(RUNTIME_GOPATH) go build -ldflags "-X fstaid.version=$(VERSION)" -a -tags netgo -installsuffix netgo -o $(PROGRAM)
+	GOPATH=$(RUNTIME_GOPATH) CGO_ENABLED=0 go build -ldflags "-X fstaid.version=$(VERSION)" -a -tags netgo -installsuffix netgo -o $(PROGRAM)
 else
-	GOPATH=$(RUNTIME_GOPATH) go build -ldflags "-X fstaid.version=$(VERSION)" -o $(PROGRAM)
+	GOPATH=$(RUNTIME_GOPATH) CGO_ENABLED=0 go build -ldflags "-X fstaid.version=$(VERSION)" -o $(PROGRAM)
 endif
 
 .PHONY: test
