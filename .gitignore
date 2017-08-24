@@ -1,7 +1,7 @@
 /fstaid
 /*.gz
 .DS_Store
-*.tml
+*.toml
 /debian/fstaid.debhelper.log
 /debian/fstaid.substvars
 /debian/fstaid/
