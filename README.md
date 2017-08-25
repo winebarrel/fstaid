@@ -27,6 +27,7 @@ Usage of fstaid:
 port = 8080
 interval = 1
 maxattempts = 3
+attempt_interval = 1
 #lockdir = "/tmp"
 #log = "/var/log/fstaid.log"
 #mode = "debug"(default) / "release"

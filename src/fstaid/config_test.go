@@ -15,6 +15,7 @@ func TestLoadConfig(t *testing.T) {
 port = 8080
 interval = 1
 maxattempts = 2
+attempt_interval = 3
 lockdir = "/var/tmp"
 log = "/var/log/fstaid.log"
 mode = "release"
@@ -47,12 +48,13 @@ password = "bar"
 
 		assert.Equal(Config{
 			Global: GlobalConfig{
-				Port:        8080,
-				Maxattempts: 2,
-				Interval:    1,
-				Lockdir:     "/var/tmp",
-				Log:         "/var/log/fstaid.log",
-				Mode:        "release",
+				Port:            8080,
+				Maxattempts:     2,
+				AttemptInterval: 3,
+				Interval:        1,
+				Lockdir:         "/var/tmp",
+				Log:             "/var/log/fstaid.log",
+				Mode:            "release",
 				ContinueIfSelfCheckFailed: true,
 			},
 			Primary: CommandConfig{
@@ -91,6 +93,7 @@ func TestLoadConfigWithoutAny(t *testing.T) {
 port = 8080
 interval = 1
 maxattempts = 2
+attempt_interval = 3
 
 [handler]
 command = "handler.rb"
@@ -107,12 +110,13 @@ timeout = 3
 
 		assert.Equal(Config{
 			Global: GlobalConfig{
-				Port:        8080,
-				Maxattempts: 2,
-				Interval:    1,
-				Lockdir:     "/tmp",
-				Log:         "",
-				Mode:        "debug",
+				Port:            8080,
+				Maxattempts:     2,
+				Interval:        1,
+				AttemptInterval: 3,
+				Lockdir:         "/tmp",
+				Log:             "",
+				Mode:            "debug",
 			},
 			Primary: CommandConfig{
 				Command: "echo 1",

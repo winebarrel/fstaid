@@ -2,6 +2,7 @@ package fstaid
 
 import (
 	"fmt"
+	"time"
 )
 
 type Commands struct {
@@ -119,6 +120,8 @@ func (cmds *Commands) Check() (result *CheckResult) {
 		if result.Primary.IsSuccess() {
 			break
 		}
+
+		time.Sleep(time.Second * time.Duration(cmds.Config.Global.AttemptInterval))
 	}
 
 	if result.Primary.IsSuccess() {
