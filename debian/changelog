@@ -1,3 +1,9 @@
+fstaid (0.1.7) unstable; urgency=low
+
+  * Fix attempt_interval (support millisecond).
+
+ -- Genki Sugawara <sgwr_dts@yahoo.co.jp>  Fri, 25 Aug 2017 18:30:59 +0900
+
 fstaid (0.1.6) unstable; urgency=low
 
   * Add attempt_interval option.

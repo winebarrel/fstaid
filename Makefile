@@ -1,6 +1,6 @@
 SHELL          := /bin/bash
 PROGRAM        := fstaid
-VERSION        := v0.1.6
+VERSION        := v0.1.7
 GOOS           := $(shell go env GOOS)
 GOARCH         := $(shell go env GOARCH)
 RUNTIME_GOPATH := $(GOPATH):$(shell pwd)

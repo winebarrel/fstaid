@@ -1,7 +1,7 @@
 %define  debug_package %{nil}
 
 Name:     fstaid
-Version:  0.1.6
+Version:  0.1.7
 Release:  1%{?dist}
 Summary:  fstaid is a daemon that monitors the health condition of the server and executes the script if there is any problem.
 
