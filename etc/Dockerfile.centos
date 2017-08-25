@@ -12,7 +12,7 @@ RUN yum install -y rpmdevtools make
 RUN yum install -y git --enablerepo=wandisco-git
 RUN rpmdev-setuptree
 
-ARG GO_VERSION=1.8.3
+ARG GO_VERSION=1.9
 ENV GOROOT=/usr/local/go
 ENV GOPATH=/root/.go
 ENV PATH $GOROOT/bin:$PATH
