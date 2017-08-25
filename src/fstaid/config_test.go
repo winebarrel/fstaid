@@ -15,7 +15,7 @@ func TestLoadConfig(t *testing.T) {
 port = 8080
 interval = 1
 maxattempts = 2
-attempt_interval = 3
+attempt_interval = 3.0
 lockdir = "/var/tmp"
 log = "/var/log/fstaid.log"
 mode = "release"
@@ -50,7 +50,7 @@ password = "bar"
 			Global: GlobalConfig{
 				Port:            8080,
 				Maxattempts:     2,
-				AttemptInterval: 3,
+				AttemptInterval: 3.0,
 				Interval:        1,
 				Lockdir:         "/var/tmp",
 				Log:             "/var/log/fstaid.log",
@@ -93,7 +93,7 @@ func TestLoadConfigWithoutAny(t *testing.T) {
 port = 8080
 interval = 1
 maxattempts = 2
-attempt_interval = 3
+attempt_interval = 3.0
 
 [handler]
 command = "handler.rb"
@@ -113,7 +113,7 @@ timeout = 3
 				Port:            8080,
 				Maxattempts:     2,
 				Interval:        1,
-				AttemptInterval: 3,
+				AttemptInterval: 3.0,
 				Lockdir:         "/tmp",
 				Log:             "",
 				Mode:            "debug",

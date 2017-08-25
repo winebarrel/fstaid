@@ -121,7 +121,7 @@ func (cmds *Commands) Check() (result *CheckResult) {
 			break
 		}
 
-		time.Sleep(time.Second * time.Duration(cmds.Config.Global.AttemptInterval))
+		time.Sleep(time.Millisecond * time.Duration(1000*cmds.Config.Global.AttemptInterval))
 	}
 
 	if result.Primary.IsSuccess() {

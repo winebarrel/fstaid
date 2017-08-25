@@ -18,7 +18,7 @@ type Config struct {
 type GlobalConfig struct {
 	Port                      int
 	Maxattempts               int
-	AttemptInterval           int `toml:"attempt_interval"`
+	AttemptInterval           float64 `toml:"attempt_interval"`
 	Interval                  int
 	Lockdir                   string
 	Log                       string
@@ -72,8 +72,8 @@ func LoadConfig(flags *Flags) (config *Config, err error) {
 		return
 	}
 
-	if config.Global.AttemptInterval < 1 {
-		err = fmt.Errorf("[global] attempt_interval must be '>= 1'")
+	if config.Global.AttemptInterval < 0.0 {
+		err = fmt.Errorf("[global] attempt_interval must be '>= 0.0'")
 		return
 	}
 
