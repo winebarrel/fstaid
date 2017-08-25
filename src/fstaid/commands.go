@@ -25,13 +25,22 @@ func (result *CommandResult) IsSuccess() bool {
 }
 
 type CheckResult struct {
-	Primary   *CommandResult
-	Secondary *CommandResult
-	Self      *CommandResult
+	Primary       *CommandResult
+	Secondary     *CommandResult
+	Self          *CommandResult
+	SecondarySelf *CommandResult
 }
 
 func (result *CheckResult) SelfCheckIsSuccess() bool {
 	if result.Self == nil || result.Self.IsSuccess() {
+		return true
+	} else {
+		return false
+	}
+}
+
+func (result *CheckResult) SecondarySelfCheckIsSuccess() bool {
+	if result.SecondarySelf == nil || result.SecondarySelf.IsSuccess() {
 		return true
 	} else {
 		return false
@@ -118,6 +127,15 @@ func (cmds *Commands) Check() (result *CheckResult) {
 
 	if cmds.Secondary != nil {
 		result.Secondary.ExitCode, result.Secondary.Timeout = cmds.Secondary.Run()
+	}
+
+	if result.Secondary.IsSuccess() {
+		return
+	}
+
+	if cmds.Self != nil {
+		result.SecondarySelf = &CommandResult{}
+		result.SecondarySelf.ExitCode, result.SecondarySelf.Timeout = cmds.Self.Run()
 	}
 
 	return

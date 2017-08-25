@@ -254,6 +254,92 @@ func TestCheckerPrimaryCheckFailSecondaryCheckSuccess(t *testing.T) {
 	assert.Equal("Primary check failed, but Secondary check succeeded\n", out)
 }
 
+func TestCheckerCheckFailSecondarySelfCheckSuccess(t *testing.T) {
+	assert := assert.New(t)
+
+	commands := &Commands{}
+	checker := &Checker{Commands: commands}
+	checkCalled := false
+	handleFailureCalled := false
+
+	result := &CheckResult{
+		Primary:       &CommandResult{ExitCode: 1},
+		Secondary:     &CommandResult{ExitCode: 1},
+		Self:          &CommandResult{ExitCode: 0},
+		SecondarySelf: &CommandResult{ExitCode: 0},
+	}
+
+	out := logToBuffer(func() {
+		patchInstanceMethod(commands, "Check", func(guard **monkey.PatchGuard) interface{} {
+			return func(_ *Commands) *CheckResult {
+				defer (*guard).Unpatch()
+				(*guard).Restore()
+				checkCalled = true
+				return result
+			}
+		})
+
+		patchInstanceMethod(checker, "HandleFailure", func(guard **monkey.PatchGuard) interface{} {
+			return func(_ *Checker, cr *CheckResult) {
+				defer (*guard).Unpatch()
+				(*guard).Restore()
+				assert.Equal(result, cr)
+				handleFailureCalled = true
+				return
+			}
+		})
+
+		checker.Check()
+	})
+
+	assert.Equal(true, checkCalled)
+	assert.Equal(true, handleFailureCalled)
+	assert.Equal("** Health check failed **\n", out)
+}
+
+func TestCheckerCheckFailSelfCheckFail(t *testing.T) {
+	assert := assert.New(t)
+
+	commands := &Commands{}
+	checker := &Checker{Commands: commands}
+	checkCalled := false
+	handleFailureCalled := false
+
+	result := &CheckResult{
+		Primary:       &CommandResult{ExitCode: 1},
+		Secondary:     &CommandResult{ExitCode: 1},
+		Self:          &CommandResult{ExitCode: 0},
+		SecondarySelf: &CommandResult{ExitCode: 1},
+	}
+
+	out := logToBuffer(func() {
+		patchInstanceMethod(commands, "Check", func(guard **monkey.PatchGuard) interface{} {
+			return func(_ *Commands) *CheckResult {
+				defer (*guard).Unpatch()
+				(*guard).Restore()
+				checkCalled = true
+				return result
+			}
+		})
+
+		patchInstanceMethod(checker, "HandleFailure", func(guard **monkey.PatchGuard) interface{} {
+			return func(_ *Checker, cr *CheckResult) {
+				defer (*guard).Unpatch()
+				(*guard).Restore()
+				assert.Equal(result, cr)
+				handleFailureCalled = true
+				return
+			}
+		})
+
+		checker.Check()
+	})
+
+	assert.Equal(true, checkCalled)
+	assert.Equal(false, handleFailureCalled)
+	assert.Equal("Primary/Secondary check failed, but Self check failed\n", out)
+}
+
 func TestCheckerSelfCheckFail(t *testing.T) {
 	assert := assert.New(t)
 
