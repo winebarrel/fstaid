@@ -8,7 +8,7 @@ fstaid is a daemon that monitors the health condition of the server and executes
 
 ## Flowchart
 
-![](https://cdn.pbrd.co/images/2PtOoeCdD.png)
+![](https://cdn.pbrd.co/images/GHdiTqq.png)
 
 ## Usage
 
