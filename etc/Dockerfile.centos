@@ -3,6 +3,8 @@ FROM centos:centos6
 USER root
 WORKDIR /
 
+RUN yum -y install yum-plugin-fastestmirror
+RUN echo "include_only=.jp" >> /etc/yum/pluginconf.d/fastestmirror.conf
 COPY etc/wandisco.repo /etc/yum.repos.d/
 RUN rpm --import http://opensource.wandisco.com/RPM-GPG-KEY-WANdisco
 RUN yum update -y
@@ -10,7 +12,7 @@ RUN yum install -y rpmdevtools make
 RUN yum install -y git --enablerepo=wandisco-git
 RUN rpmdev-setuptree
 
-ARG GO_VERSION=1.8
+ARG GO_VERSION=1.8.3
 ENV GOROOT=/usr/local/go
 ENV GOPATH=/root/.go
 ENV PATH $GOROOT/bin:$PATH
